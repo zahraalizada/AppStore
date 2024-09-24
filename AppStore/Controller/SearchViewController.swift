@@ -11,6 +11,11 @@ private let reuseIdentifier = "SearchCell"
 
 class SearchViewController: UICollectionViewController {
     // MARK: - Properties
+    var searchResults: [Result] = [] {
+        didSet {collectionView.reloadData()}
+    }
+    
+    
     // MARK: - Lifecycle
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -44,10 +49,11 @@ extension SearchViewController {
 //MARK: - UICollectionViewDataSource
 extension SearchViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return searchResults.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SearchCell
+        cell.result = self.searchResults[indexPath.row]
         return cell
     }
 }
@@ -65,6 +71,9 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        SearchService.fetchData(searchtext: searchText)
+        SearchService.fetchData(searchtext: searchText) { results in
+            self.searchResults = results
+        }
+        
     }
 }
