@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class  AppCellDetailCell: UICollectionViewCell {
     // MARK: - Properties
+    var result: FeedResult?{
+        didSet{ configure() }
+    }
     private let appIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.customMode()
@@ -74,6 +78,13 @@ extension AppCellDetailCell {
             fullStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             fullStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+    }
+    private func configure() {
+        guard let result = self.result else { return }
+        let viewModel = AppCellDetailViewModel(result: result)
+        self.nameLabel.text = result.name
+        self.firmLabel.text = result.artistName
+        self.appIcon.kf.setImage(with: viewModel.appImageURL)
     }
 }
 

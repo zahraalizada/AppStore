@@ -9,6 +9,9 @@ import UIKit
 private let reuseIdentifier = "AppsHeaderViewCell"
 class AppsHeaderViewController: UICollectionViewController {
     // MARK: - Properties
+    var appsHeaderResult: [AppHeaderModel] = [] {
+        didSet {collectionView.reloadData()}
+    }
     // MARK: - Lifecycle
     init() {
         let flowLayout = UICollectionViewFlowLayout()
@@ -34,11 +37,12 @@ extension AppsHeaderViewController {
 // MARK: UICollectionViewDataSource
 extension AppsHeaderViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.appsHeaderResult.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AppsHeaderViewCell
+        cell.appHeaderModel = self.appsHeaderResult[indexPath.row]
         return cell
     }
 }
@@ -46,6 +50,9 @@ extension AppsHeaderViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension AppsHeaderViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 30, height: view.frame.height)
+        return .init(width: view.frame.width - 40, height: view.frame.height)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 0, left: 10, bottom: 0, right: 0)
     }
 }
