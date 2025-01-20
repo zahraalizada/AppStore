@@ -74,6 +74,7 @@ extension AppsViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AppCell
         cell.feed = self.feedArray[indexPath.row]
+        cell.delegate = self
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -94,4 +95,13 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 0, left: 10, bottom: 0, right: 0)
     }
+}
+
+// MARK: AppCellProtocol
+extension AppsViewController: AppCellProtocol {
+    func goAppInfoViewController(id: String) {
+        let controller = AppInfoViewController(id: id)
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }

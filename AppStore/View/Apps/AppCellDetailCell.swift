@@ -8,8 +8,13 @@
 import UIKit
 import Kingfisher
 
+protocol AppCellDetailCellProtocol: AnyObject {
+    func goAppInfoViewController(id: String)
+}
+
 class  AppCellDetailCell: UICollectionViewCell {
     // MARK: - Properties
+    weak var delegate: AppCellDetailCellProtocol?
     var result: FeedResult?{
         didSet{ configure() }
     }
@@ -52,6 +57,14 @@ class  AppCellDetailCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Selectors (Actions)
+extension AppCellDetailCell{
+    @objc private func handleSelf(){
+        delegate?.goAppInfoViewController(id: result?.id ?? "")
+    }
+}
+
+
 // MARK: - Helpers
 extension AppCellDetailCell {
     private func style() {
@@ -60,15 +73,18 @@ extension AppCellDetailCell {
         fullStackView = UIStackView(arrangedSubviews: [appIcon,labelStackView,getButton])
         fullStackView.axis = .horizontal
         fullStackView.alignment = .center
+        fullStackView.spacing = 8
         fullStackView.translatesAutoresizingMaskIntoConstraints = false
         getButton.layer.cornerRadius = 34 / 2
         appIcon.layer.cornerRadius = 10
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSelf))
+        self.addGestureRecognizer(tapGesture)
     }
     private func layout() {
         addSubview(fullStackView)
         NSLayoutConstraint.activate([
             appIcon.widthAnchor.constraint(equalToConstant: 80),
-            appIcon.heightAnchor.constraint(equalToConstant: 70),
+            appIcon.heightAnchor.constraint(equalToConstant: 65),
             
             getButton.widthAnchor.constraint(equalToConstant: 80),
             getButton.heightAnchor.constraint(equalToConstant: 34),

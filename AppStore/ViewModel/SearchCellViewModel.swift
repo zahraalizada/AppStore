@@ -23,15 +23,27 @@ class SearchCellViewModel {
         return result.primaryGenreName
     }
     var appImage: URL?{
-        return URL(string:  result.artworkUrl100)
+        return URL(string: result.artworkUrl100)
     }
     var screenshot1: URL?{
-        return URL(string:  result.screenshotUrls[0])
+        guard !result.screenshotUrls.isEmpty else { return nil }
+        return URL(string: result.screenshotUrls[0])
     }
     var screenshot2: URL?{
-        return URL(string:  result.screenshotUrls[1])
+        if result.screenshotUrls.count > 1 {
+            return URL(string: result.screenshotUrls[1])
+        } else {
+            guard !result.screenshotUrls.isEmpty else { return nil }
+            return URL(string: result.screenshotUrls[0])
+        }
+        
     }
     var screenshot3: URL?{
-        return URL(string:  result.screenshotUrls[2])
+        if result.screenshotUrls.count > 2 {
+            return URL(string: result.screenshotUrls[2])
+        } else {
+            guard !result.screenshotUrls.isEmpty else { return nil }
+            return URL(string: result.screenshotUrls[0])
+        }
     }
 }
