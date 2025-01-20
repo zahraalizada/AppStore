@@ -22,12 +22,14 @@ class AppsHeaderViewCell: UICollectionViewCell {
     private let firmLabel: UILabel = {
         let label = UILabel()
         label.text = "Linkedin"
-        label.textColor = .blue
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "init(coder:) has not been implemented init(coder) has not been implemented"
+        label.textColor = .darkGray
         return label
     }()
     private var stackview: UIStackView!
@@ -47,16 +49,17 @@ extension AppsHeaderViewCell {
     private func style() {
         stackview = UIStackView(arrangedSubviews: [firmLabel,titleLabel,appImage])
         stackview.axis = .vertical
-        stackview.spacing = 12
+        stackview.spacing = 4
         stackview.translatesAutoresizingMaskIntoConstraints = false
     }
     private func layout() {
         addSubview(stackview)
         NSLayoutConstraint.activate([
-            stackview.topAnchor.constraint(equalTo: topAnchor),
+            stackview.topAnchor.constraint(equalTo: topAnchor,  constant: 10),
             stackview.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackview.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackview.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
         ])
     }
     private func configure() {

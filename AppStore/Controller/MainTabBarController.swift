@@ -18,12 +18,9 @@ class MainTabBarController: UITabBarController {
 extension MainTabBarController {
     private func setup() {
         viewControllers = [
-            createViewController(rootViewController: TodayViewController(), title: "Today", imageName: "doc.text.image"),
-            createViewController(rootViewController: AppsViewController(), title: "Apps", imageName: "square.stack.3d.up"),
+            createViewController(rootViewController: AppsViewController(), title: "AppSpot", imageName: "square.stack.3d.up"),
             createViewController(rootViewController: SearchViewController(), title: "Search", imageName: "magnifyingglass"),
-          
-            
-            
+            createViewController(rootViewController: TodayViewController(), title: "Today", imageName: "doc.text.image"),
         ]
     }
     private func createViewController(rootViewController: UIViewController, title: String, imageName: String) -> UIViewController {
